@@ -3,6 +3,7 @@ using namespace std;
 #include <iostream>
 
 int main() {
+    cout << "Enter password:" << endl;
     string enteredPassword;
     cin >> enteredPassword;
     if(enteredPassword == "test123")    
