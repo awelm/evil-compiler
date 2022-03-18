@@ -1,10 +1,11 @@
-using namespace std;
 #include <string>
 #include <cstdlib> 
 #include <regex>
 #include <fstream>
 #include <sstream>
 #include <iostream>
+
+using namespace std;
 
 // This searches the file and replaces all occurrences of regexPattern with `newText`
 void findAndReplace(string fileName, string regexPattern, string newText) {
