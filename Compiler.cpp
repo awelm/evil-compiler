@@ -3,9 +3,9 @@ using namespace std;
 #include <cstdlib> 
 
 int main(int argc, char *argv[]) {
-	string allArgs = "";
+    string allArgs = "";
     for(int i=1; i<argc; i++)
         allArgs += " " + string(argv[i]);
     string shellCommand = "g++" + allArgs;
-	system(shellCommand.c_str());
+    system(shellCommand.c_str());
 }
